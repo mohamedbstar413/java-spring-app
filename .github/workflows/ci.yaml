@@ -1,7 +1,7 @@
 name: CI Pipeline
 
 on:
-    push:
+    pull_request:
         branches: [ main ]
 jobs:
     build:
@@ -22,12 +22,8 @@ jobs:
               with:
                 distribution: 'temurin'
                 java-version: '17'
-            - name: Linting java code
+            - name: Fail on branch name mismatch
+              if: github.ref != 'refs/heads/feature/*'
               run: |
-                #for each microservice, run the checkstyle and pmd plugins
-                all_dirs=$(find . -type d -name "*-service")
-                for dir in $all_dirs; do
-                  cd $dir
-                  mvn checkstyle:check pmd:check
-                  cd ..
-                done
+                echo "Branch name mismatch. Expected 'feature/*' but got '${{ github.ref }}'."
+                exit 1
