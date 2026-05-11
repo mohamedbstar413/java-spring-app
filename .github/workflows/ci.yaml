@@ -25,7 +25,7 @@ jobs:
             - name: Linting java code
               run: |
                 #for each microservice, run the checkstyle and pmd plugins
-                all_dirs = $(find . -type d -name "*-service")
+                all_dirs=$(find . -type d -name "*-service")
                 for dir in $all_dirs; do
                   cd $dir
                   mvn checkstyle:check pmd:check
