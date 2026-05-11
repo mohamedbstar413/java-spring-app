@@ -17,3 +17,10 @@ jobs:
                 echo "Branch: ${{ github.ref }}"
                 echo "Commit SHA: ${{ github.sha }}"
                 echo "Event Type: ${{ github.event_name }}"
+            - name: Installing java
+              uses: actions/setup-java@v4
+              with:
+                distribution: 'temurin'
+                java-version: '17'
+            - name: Linting java code
+              run: mvn checkstyle:check pmd:check
