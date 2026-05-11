@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Microservices Test Console</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <p class="eyebrow">Java Spring Microservices</p>
+        <h1>Test Console</h1>
+        <p class="hero-copy">
+          A small frontend for manually testing auth, patient CRUD, and gateway
+          routes from one place.
+        </p>
+      </section>
+
+      <section class="grid">
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Auth Login</h2>
+            <span class="tag">Direct Auth Service</span>
+          </div>
+          <form id="login-form" class="stack">
+            <label>
+              <span>Email</span>
+              <input
+                id="login-email"
+                name="email"
+                type="email"
+                value="testuser@test.com"
+                autocomplete="username"
+              />
+            </label>
+            <label>
+              <span>Password</span>
+              <input
+                id="login-password"
+                name="password"
+                type="password"
+                value="password123"
+                autocomplete="current-password"
+              />
+            </label>
+            <div class="actions">
+              <button type="submit">Login</button>
+              <button type="button" class="ghost" id="clear-token">
+                Clear Token
+              </button>
+            </div>
+          </form>
+          <label>
+            <span>JWT Token</span>
+            <textarea
+              id="jwt-token"
+              rows="5"
+              placeholder="Token will appear here after a successful login"
+            ></textarea>
+          </label>
+          <p class="hint">
+            Login currently depends on your auth seed data being present.
+          </p>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Patients</h2>
+            <span class="tag">Direct Patient Service</span>
+          </div>
+          <form id="patient-form" class="stack">
+            <label>
+              <span>Patient ID for update/delete</span>
+              <input
+                id="patient-id"
+                name="patientId"
+                placeholder="Leave empty when creating"
+              />
+            </label>
+            <label>
+              <span>Name</span>
+              <input id="patient-name" name="name" value="Test Patient" />
+            </label>
+            <label>
+              <span>Email</span>
+              <input
+                id="patient-email"
+                name="email"
+                type="email"
+                value="test.patient@example.com"
+              />
+            </label>
+            <label>
+              <span>Address</span>
+              <input
+                id="patient-address"
+                name="address"
+                value="Cairo, Egypt"
+              />
+            </label>
+            <label>
+              <span>Date of Birth</span>
+              <input
+                id="patient-dob"
+                name="dateOfBirth"
+                type="date"
+                value="1995-01-15"
+              />
+            </label>
+            <label>
+              <span>Registered Date</span>
+              <input
+                id="patient-registered-date"
+                name="registeredDate"
+                type="date"
+                value="2026-03-30"
+              />
+            </label>
+            <div class="actions wrap">
+              <button type="button" id="list-patients">List Patients</button>
+              <button type="submit">Create Patient</button>
+              <button type="button" class="ghost" id="update-patient">
+                Update Patient
+              </button>
+              <button type="button" class="ghost danger" id="delete-patient">
+                Delete Patient
+              </button>
+            </div>
+          </form>
+          <p class="hint">
+            Create requires <code>registeredDate</code>. Update uses the ID
+            field.
+          </p>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h2>Gateway Test</h2>
+            <span class="tag">Protected Route</span>
+          </div>
+          <div class="stack">
+            <p class="hint">
+              Uses your token against the gateway route
+              <code>/api/patients</code>.
+            </p>
+            <div class="actions">
+              <button type="button" id="gateway-list">
+                List Via Gateway
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel output-panel">
+          <div class="panel-head">
+            <h2>Response Viewer</h2>
+            <span class="tag" id="response-badge">Idle</span>
+          </div>
+          <div class="response-meta">
+            <div>
+              <strong>Request</strong>
+              <p id="request-line">No request yet</p>
+            </div>
+            <div>
+              <strong>Status</strong>
+              <p id="status-line">Waiting</p>
+            </div>
+          </div>
+          <pre id="response-output">Start with login or list patients.</pre>
+        </article>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
