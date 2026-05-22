@@ -35,7 +35,7 @@ jobs:
               run: |
                 #iterate throuah all microservices and build them
                 all_services=("analytics-service" "auth-service" "billing-service" "api-gateway" "patient-service")
-                for service in $all_services; do
+                for service in ${all_services[@]}; do
                     cd $service
                     mvn clean install -DskipTests
                     cd ..
@@ -48,7 +48,7 @@ jobs:
                 all_services=("analytics-service" "auth-service" "billing-service" "api-gateway" "patient-service")
                 image_tag=${{github.sha}} #latest commit sha
                 image_tag=${image_tag:0:10}
-                for service in $all_services; do
+                for service in ${all_services[@]}; do
                     cd $service
                     docker build -t ${{ secrets.DOCKER_USERNAME }}/$service:${image_tag} .
                     docker push ${{ secrets.DOCKER_USERNAME }}/$service:${image_tag}
