@@ -2,7 +2,7 @@ FROM eclipse-temurin:21-jdk-jammy AS runner
 
 WORKDIR /app
 
-COPY  ./app/target/patient-service-0.0.1-SNAPSHOT.jar ./app.jar
+COPY  ./target/patient-service-0.0.1-SNAPSHOT.jar ./app.jar
 
 EXPOSE 8080
 
