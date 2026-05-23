@@ -54,4 +54,28 @@ jobs:
                     docker push ${{ secrets.DOCKER_USERNAME }}/$service:${image_tag}
                     cd ..
                 done
+            - name: Create settings.xml at runtime
+              run: |
+                mkdir -p ~/.m2
+                cat > ~/.m2/settings.xml << EOF
+                <?xml version="1.0" encoding="UTF-8"?>
+                <settings>
+                  <servers>
+                    <server>
+                      <id>github</id>
+                      <username>${{ github.actor }}</username>
+                      <password>${{ secrets.GIT_TOKEN }}</password>
+                    </server>
+                  </servers>
+                </settings>
+                EOF
+            - name: Publish to GitHub Packages
+              run: |
+                #iterate through all microservices and publish them to github packages
+                all_services=("analytics-service" "auth-service" "billing-service" "api-gateway" "patient-service")
+                for service in ${all_services[@]}; do
+                    cd $service
+                    mvn deploy -DskipTests
+                    cd ..
+                done
             
